@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon --exec ts-node src/index.ts",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -20,12 +21,19 @@
   "homepage": "https://github.com/tadjik1/moviepicker-telegram-bot#readme",
   "description": "",
   "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
     "nodemon": "^3.1.10",
+    "prettier": "3.5.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "axios": "^1.9.0",
     "dotenv": "^16.5.0",
     "grammy": "^1.36.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
