@@ -40,6 +40,6 @@ FROM base
 # Copy built application
 COPY --from=build /app /app
 
-# Start the server by default, this can be overwritten at runtime
+ENV NODE_ENV="production"
 EXPOSE 3000
 CMD [ "node", "dist/index.js" ]

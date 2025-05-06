@@ -1,13 +1,13 @@
 import "dotenv/config";
+import express from "express";
 import {
   Bot,
   GrammyError,
   HttpError,
   InlineKeyboard,
-  InputMediaBuilder,
-  Keyboard,
+  webhookCallback,
 } from "grammy";
-import { getRandom, search } from "./services/kinopoisk";
+import { search } from "./services/kinopoisk";
 import { getRecommendations } from "./services/openai";
 
 const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
@@ -64,4 +64,18 @@ bot.catch((err) => {
   );
 });
 
-bot.start();
+// use webhook in production
+if (process.env.NODE_ENV === "production") {
+  const app = express();
+  app.use(express.json());
+
+  app.use(
+    webhookCallback(bot, "express", {
+      secretToken: process.env.BOT_SECRET_TOKEN,
+    }),
+  );
+
+  app.listen(3000);
+} else {
+  bot.start();
+}
